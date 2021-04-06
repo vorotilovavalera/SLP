@@ -39,7 +39,7 @@
 (print (delete-last-el '(a b 3 4 5) 3)) ;(A B)
 (print (delete-last-el '(1 2) 0)) ;(1 2)
 
-;14)
+;14) Определите функцию, осуществляющую перестановку двух элементов списка с заданными номерами.
  (defun cut-list (lst n l) 
   (cond ((zerop l) nil)
         ((and (= n 1) (> l 0)) (cons (car lst) (cut-list (cdr lst) 1 (- l 1))))
