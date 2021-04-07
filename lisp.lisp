@@ -39,58 +39,59 @@
 (print (delete-last-el '(a b 3 4 5) 3)) ;(A B)
 (print (delete-last-el '(1 2) 0)) ;(1 2)
 
-;14) Определите функцию, осуществляющую перестановку двух элементов списка с заданными номерами.
- (defun cut-list (lst n l) 
-  (cond ((zerop l) nil)
-        ((and (= n 1) (> l 0)) (cons (car lst) (cut-list (cdr lst) 1 (- l 1))))
-        (t (cut-list (cdr lst) (- n 1) l))))
-(defun task (lst p q)
-  (cond ((= p q) lst)
-        ((> p q) (task lst q p))
-        (t  (let* ((ls (length lst))
-                  (l (cut-list lst 1 (- p 1)))
-                  (m (cut-list lst p (- q p)))
-                  (r (cut-list lst q (- ls q -1))))
-            (append l (list (car r)) (cdr m) (list (car m)) (cdr r))))))
-(print(task '(1 2 3 4 5 6 7) 5 3))
-
-;19)
-(defun onion (n &optional (m n))
-  (cond ((zerop n) m)
-        (t (list (onion (1- n) m)))))
-        (print(onion 5))
 
 ;20) Определите функцию ПЕРВЫЙ-АТОМ, результатом которой будет первый атом списка
 
-(defun первый-атом (list) 
-  ( ( lambda (first)
-             (cond 
-                 ((atom first) first)
-                 (t (первый-атом first))
-              )
-    )(car list)
-  )    
-) 
-    
-(print (первый-атом '(((a b)) c d)) ) ;A
-(print (первый-атом '((((1 ) b)) c d)) ) ;1
-(print (первый-атом '(((atom) a) b) ) ) ;ATOM
+(defun ПЕРВЫЙ-АТОМ(x)
+    ((lambda (f1)
+        (cond 
+            ((ATOM f1) f1)
+            (t (ПЕРВЫЙ-АТОМ f1))
+        ))
+    (car x)))
+
+(print (ПЕРВЫЙ-АТОМ '(((5) 6 7)4 (1 2) 2 3)))
+;5
+(print (ПЕРВЫЙ-АТОМ '(1 2 3 4 5)))
+;1
+(print (ПЕРВЫЙ-АТОМ '(() (1 2 3) 1 1)))
+;NIL
 
 ;36) Проверить пересекаются  ли списки
-(defun f (x y)
-(cond ((null x) t)
-((mem (car x) y) nil)
-(t (f (cdr x) y))))
+(defun Пересечение (lst1 lst2)
+    (cond ((null lst1) t)
+        ((mem (car lst1) lst2) nil)
+        (t (Пересечение (cdr lst1) lst2))))
 
 
 (defun mem (x y)
-(cond
-((null y) nil)
-((equal x (car y)) x)
-(t (mem x (cdr y)))))
+    (cond
+        ((null y) nil)
+        ((equal x (car y)) t)
+        (t (mem x (cdr y)))))
 
 
-(print (f '(1 4 6 10) '(0 2 3 5 10)))
+(print (Пересечение '(1 4 6 10) '(0 2 3 5 10)))
+;NIL
+(print (Пересечение '(1 4 6) '(2 3 5 10)))
+;T
+(print (Пересечение '() '()))
+;T
+
+;42)Определите функцию, находящую максимальное из значений, находящихся в вершинах дерева
+
+(defun max-c (a b) 
+    (if (> a b) a b))
+
+(defun max-elem (tree) (
+    cond 
+        ((null (first tree)) -1)
+        ((not (or (second tree) (third tree))) (first tree))
+        (t (max-c (max-elem (second tree)) (max-elem (third tree))))))
+
+
+(print (max-elem '(1 (2 (6) ()) (3 () (10)))));10
+
 
 ;47) Определите функцию УДАЛИТЬ-ВСЕ-СВОЙСТВА, которая удаляет все свойства символа.
 
