@@ -1,15 +1,17 @@
 ;5) Определите функцию, которая увеличивает элементы исходного списка на единицу.
 
-(defun plus-one (lst)
-    (cond
-        ((null lst) nil)
-        (t (cons (1+ (car lst)) (plus-one (cdr lst))))
-        )
-    )
+(defun increase(list)
+	(cond 
+		( (null list) nil )
+		( t (cons (+(car list) 1) (increase(cdr list))) )
+	) 
+)
 
-(print ( plus-one '( )))
-(print ( plus-one '(1)))
-(print ( plus-one '(1 2 3 4)))
+(print (increase '(-4 5 0)))         
+;>(-3 6 1) 
+
+(print (increase '()))               
+;>NIL 
 
 ;6) Определите функцию, переводящую список чисел в список соответствующих им названий.
 (defun num-to-string(L)
@@ -35,7 +37,22 @@
 (print (delete-last-el '(a b 3 4 5) 3)) ;(A B)
 (print (delete-last-el '(1 2) 0)) ;(1 2)
 
+;19) Определите функцию (ЛУКОВИЦА, n), строящую N-уровневый вложенный список,
+;элементом которого на самом глубоком уровне является N
+;Пример: (ЛУКОВИЦА, 5) -> (((((5)))))
 
+(defun onion (n)
+    (do ((res (list n)))
+        ((= n 1) res)
+            (setq res (list res))
+        (setq n (- n 1))))
+
+;TEST 1
+(print (onion 7))
+;TEST 2
+(print (onion 2))
+;TEST 3
+(print (onion 13))
 ;20) Определите функцию ПЕРВЫЙ-АТОМ, результатом которой будет первый атом списка
 
 (defun ПЕРВЫЙ-АТОМ(x)
@@ -86,5 +103,28 @@
 
 
 ;47) Определите функцию УДАЛИТЬ-ВСЕ-СВОЙСТВА, которая удаляет все свойства символа.
+(defun del (a)
+    (cond((null (symbol-plist a))nil)
+        (t(remprop a (car (symbol-plist a)))(del a))
+        )
+    )
+
+(setf (get 'a 'x) 2)
+(setf (get 'a 'y) 3)
+
+(setf (get 'b 'x) 5)
+(setf (get 'b 'y) 1)
+
+(setf (get 'atlanta 'x) -3)
+(setf (get 'atlanta 'y) 2)
+
+(print "Task 47")
+
+(print (del 'a))
+
+(print (del 'b))
+
+(print (del 'atlanta))
+
 
 
